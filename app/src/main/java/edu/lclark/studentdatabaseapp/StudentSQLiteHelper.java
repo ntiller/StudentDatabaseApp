@@ -43,11 +43,25 @@ public class StudentSQLiteHelper extends SQLiteOpenHelper {
                 Student.COL_YEAR + " TEXT, " +
                 Student.COL_NET_WORTH + " BIGINT )"
         );
+
+        db.execSQL(CSClass.CREATE_TABLE);
+
+        SQLiteDatabase database = getWritableDatabase();
+        database.beginTransaction();
+
+        ArrayList<CSClass> classes = CSClass.getAllClasses();
+        for (CSClass csClass : classes) {
+            database.insert(CSClass.TABLE_NAME, null, csClass.getContentValues());
+        }
+        database.setTransactionSuccessful();
+        database.endTransaction();
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE " + Student.TABLE_NAME);
+        db.execSQL("DROP TABLE " + CSClass.TABLE_NAME);
         onCreate(db);
     }
 

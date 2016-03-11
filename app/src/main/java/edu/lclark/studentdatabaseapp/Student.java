@@ -13,6 +13,12 @@ public class Student implements BaseColumns {
     private String mYear;
     private double mNetWorth;
 
+
+    public static final String FRESHMAN = "Freshman";
+    public static final String SOPHOMORE = "Sophomore";
+    public static final String JUNIOR = "Junior";
+    public static final String SENIOR = "Senior";
+
     public static final String TABLE_NAME = "students";
     public static final String COL_NAME = "name";
     public static final String COL_YEAR = "year";
