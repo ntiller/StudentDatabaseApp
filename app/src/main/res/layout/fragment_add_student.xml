@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/fragment_add_student_name_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/student_name"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+    <RadioGroup
+        android:id="@+id/fragment_add_student_year_radiogroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp">
+        <RadioButton
+            android:id="@+id/fragment_add_student_freshman"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/freshman"
+            android:checked="true"
+            />
+        <RadioButton
+            android:id="@+id/fragment_add_student_sophomore"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/sophomore"
+            />
+        <RadioButton
+            android:id="@+id/fragment_add_student_junior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/junior"
+            />
+        <RadioButton
+            android:id="@+id/fragment_add_student_senior"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/senior"
+            />
+    </RadioGroup>
+
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <android.support.design.widget.TextInputEditText
+            android:id="@+id/fragment_add_student_networth_edittext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:hint="@string/net_worth"
+            />
+    </android.support.design.widget.TextInputLayout>
+
+
+</LinearLayout>

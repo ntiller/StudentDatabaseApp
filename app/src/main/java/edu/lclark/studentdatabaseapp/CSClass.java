@@ -33,14 +33,17 @@ public class CSClass implements BaseColumns {
         classList.add(new CSClass(Student.FRESHMAN, "CS 107 Perspectives in Computer Science", "107"));
         classList.add(new CSClass(Student.FRESHMAN, "CS 171 Computer Science I", "171"));
         classList.add(new CSClass(Student.FRESHMAN, "CS 172 Computer Science II", "172"));
+
         classList.add(new CSClass(Student.SOPHOMORE, "CS 230 Computational Mathematics", "230"));
         classList.add(new CSClass(Student.SOPHOMORE, "CS 277 Computer Architecture and Assembly Languages", "277"));
+
         classList.add(new CSClass(Student.JUNIOR, "CS 363 Operating Systems", "363"));
         classList.add(new CSClass(Student.JUNIOR, "CS 367 Computer Graphics", "367"));
         classList.add(new CSClass(Student.JUNIOR, "CS 369 Artificial Intelligence", "369"));
         classList.add(new CSClass(Student.JUNIOR, "CS 373 Programming Language Structures", "373"));
         classList.add(new CSClass(Student.JUNIOR, "CS 383 Algorithm Design and Analysis", "383"));
         classList.add(new CSClass(Student.JUNIOR, "CS 393 Computer Networks", "393"));
+
         classList.add(new CSClass(Student.SENIOR, "CS 465 Theory of Computation", "465"));
         classList.add(new CSClass(Student.SENIOR, "CS 467 Advanced Computer Graphics", "467"));
         classList.add(new CSClass(Student.SENIOR, "CS 487 Advanced Algorithms", "487"));

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -12,9 +13,8 @@ import java.util.ArrayList;
  */
 public class StudentSQLiteHelper extends SQLiteOpenHelper {
 
-    private static StudentSQLiteHelper sInstance;
-
     public static final String DB_NAME = "roster.db";
+    private static StudentSQLiteHelper sInstance;
 
     private StudentSQLiteHelper(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
@@ -23,6 +23,7 @@ public class StudentSQLiteHelper extends SQLiteOpenHelper {
 
     /**
      * Returns an instance of StudentSqliteHelper
+     *
      * @param context : Must be Application Context
      * @return instance of StudentSqliteHelper
      */
@@ -38,13 +39,17 @@ public class StudentSQLiteHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + Student.TABLE_NAME + " ( " +
-                Student._ID + " BIGINT PRIMARY KEY, " +
+                Student._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 Student.COL_NAME + " TEXT, " +
                 Student.COL_YEAR + " TEXT, " +
                 Student.COL_NET_WORTH + " BIGINT )"
         );
 
         db.execSQL(CSClass.CREATE_TABLE);
+
+    }
+
+    public void initialize() {
 
         SQLiteDatabase database = getWritableDatabase();
         database.beginTransaction();
@@ -55,7 +60,6 @@ public class StudentSQLiteHelper extends SQLiteOpenHelper {
         }
         database.setTransactionSuccessful();
         database.endTransaction();
-
     }
 
     @Override
@@ -73,6 +77,33 @@ public class StudentSQLiteHelper extends SQLiteOpenHelper {
         return cursor.getLong(cursor.getColumnIndex(columnName));
     }
 
+    public int getCursorInt(Cursor cursor, String columnName) {
+        return cursor.getInt(cursor.getColumnIndex(columnName));
+    }
+
+    public void getCSClassForStudents() {
+        String sql = "SELECT " +
+                Student.TABLE_NAME + "." + Student.COL_NAME + ", " + CSClass.TABLE_NAME + ".* " +
+                "FROM " + CSClass.TABLE_NAME + " INNER JOIN " + Student.TABLE_NAME +
+                " ON " + CSClass.TABLE_NAME + "." + CSClass.COL_YEAR + " LIKE " + Student.TABLE_NAME + "." + Student.COL_YEAR;
+
+        Log.d("getCSClassForStudents", sql);
+        Cursor cursor = getReadableDatabase().rawQuery(sql, null);
+
+        while (cursor.moveToNext()) {
+            String builder = getCursorString(cursor, Student.COL_NAME) +
+                    " goes to " +
+                    getCursorString(cursor, CSClass.COL_YEAR) +
+                    " : " +
+                    getCursorString(cursor, CSClass.COL_NAME);
+            Log.d("getCSClassForStudents", builder);
+        }
+
+        cursor.close();
+
+
+    }
+
     public ArrayList<Student> getAllStudents() {
         ArrayList<Student> students = new ArrayList<>();
 
@@ -82,11 +113,11 @@ public class StudentSQLiteHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
 
             do {
-                long id = getCursorLong(cursor, Student._ID);
+                int id = getCursorInt(cursor, Student._ID);
                 String name = getCursorString(cursor, Student.COL_NAME);
                 double netWorth = getCursorLong(cursor, Student.COL_NET_WORTH);
                 String year = getCursorString(cursor, Student.COL_YEAR);
-                students.add(new Student(name, id, year, netWorth));
+                students.add(new Student(id, name, year, netWorth));
             } while (cursor.moveToNext());
 
         }

@@ -43,6 +43,15 @@ public class StudentAdapter extends RecyclerView.Adapter<StudentAdapter.StudentV
         return mStudents.size();
     }
 
+    public void addStudent(Student student) {
+        mStudents.add(student);
+        notifyItemInserted(mStudents.size()-1);
+    }
+
+    public void setStudents(ArrayList<Student> students) {
+        mStudents = students;
+        notifyDataSetChanged();
+    }
     public static class StudentViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.row_student_id_textview)
         TextView mIdTextView;

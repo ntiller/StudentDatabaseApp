@@ -9,7 +9,7 @@ import android.provider.BaseColumns;
 public class Student implements BaseColumns {
 
     private String mName;
-    private long mIdNumber;
+    private int mIdNumber;
     private String mYear;
     private double mNetWorth;
 
@@ -24,9 +24,15 @@ public class Student implements BaseColumns {
     public static final String COL_YEAR = "year";
     public static final String COL_NET_WORTH = "net_worth";
 
-    public Student(String name, long idNumber, String year, double netWorth) {
+    public Student(String name, String year, double netWorth) {
         mName = name;
-        mIdNumber = idNumber;
+        mYear = year;
+        mNetWorth = netWorth;
+    }
+
+    public Student(int id, String name, String year, double netWorth) {
+        mIdNumber = id;
+        mName = name;
         mYear = year;
         mNetWorth = netWorth;
     }
@@ -47,9 +53,13 @@ public class Student implements BaseColumns {
         return mNetWorth;
     }
 
+    @Override
+    public String toString() {
+        return mName + " : " + mYear + " : $" + mNetWorth + " : " + mIdNumber;
+    }
+
     public ContentValues getContentValues() {
         ContentValues contentValues = new ContentValues();
-        contentValues.put(_ID, mIdNumber);
         contentValues.put(COL_NAME, mName);
         contentValues.put(COL_YEAR, mYear);
         contentValues.put(COL_NET_WORTH, mNetWorth);

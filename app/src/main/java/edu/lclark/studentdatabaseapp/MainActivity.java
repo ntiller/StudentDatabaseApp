@@ -4,16 +4,20 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class MainActivity extends AppCompatActivity {
+
+public class MainActivity extends AppCompatActivity implements AddStudentDialogFragment.StudentCreatedListener {
 
     @Bind(R.id.activity_main_recyclerview)
     RecyclerView mRecyclerView;
 
     private StudentAdapter mStudentAdapter;
+    private StudentSQLiteHelper mStudentSQLiteHelper;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,15 +28,26 @@ public class MainActivity extends AppCompatActivity {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        StudentSQLiteHelper studentSQLiteHelper = StudentSQLiteHelper.getInstance(getApplicationContext());
-        studentSQLiteHelper.insertStudent(new Student("Nick", 4444, "Super Senior", 9));
-        studentSQLiteHelper.insertStudent(new Student("Bill", 763254, "Freshman", 9000));
-        studentSQLiteHelper.insertStudent(new Student("Tom", 233222, "Junior", 33));
+        mStudentSQLiteHelper = StudentSQLiteHelper.getInstance(getApplicationContext());
 
-        mStudentAdapter = new StudentAdapter(studentSQLiteHelper.getAllStudents());
+        mStudentAdapter = new StudentAdapter(mStudentSQLiteHelper.getAllStudents());
         mRecyclerView.setAdapter(mStudentAdapter);
 
+        mStudentSQLiteHelper.initialize();
 
+    }
 
+    @OnClick(R.id.activity_main_fab)
+    public void onFabClick() {
+        AddStudentDialogFragment fragment = new AddStudentDialogFragment();
+        fragment.show(getSupportFragmentManager(), "dialog");
+    }
+
+    @Override
+    public void onStudentCreated(Student student) {
+        Log.d(getClass().getSimpleName(), "Created -- " + student.toString());
+        mStudentSQLiteHelper.insertStudent(student);
+        mStudentAdapter.setStudents(mStudentSQLiteHelper.getAllStudents());
+        mStudentSQLiteHelper.getCSClassForStudents();
     }
 }
