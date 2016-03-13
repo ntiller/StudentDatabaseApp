@@ -47,11 +47,12 @@ public class StudentSQLiteHelper extends SQLiteOpenHelper {
 
         db.execSQL(CSClass.CREATE_TABLE);
 
+        initialize(db);
+
     }
 
-    public void initialize() {
+    public void initialize(SQLiteDatabase database) {
 
-        SQLiteDatabase database = getWritableDatabase();
         database.beginTransaction();
 
         ArrayList<CSClass> classes = CSClass.getAllClasses();

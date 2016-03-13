@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class CSClass implements BaseColumns {
 
     public static final String COL_YEAR = "year";
-    public static final String COL_NAME = "name";
+    public static final String COL_NAME = "class_name";
     public static final String TABLE_NAME = "csclasses";
 
     private String mYear, mName, mId;

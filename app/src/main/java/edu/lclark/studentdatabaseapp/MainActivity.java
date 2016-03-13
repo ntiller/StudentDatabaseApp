@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity implements AddStudentDialogF
         mStudentAdapter = new StudentAdapter(mStudentSQLiteHelper.getAllStudents());
         mRecyclerView.setAdapter(mStudentAdapter);
 
-        mStudentSQLiteHelper.initialize();
 
     }
 
